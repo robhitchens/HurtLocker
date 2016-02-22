@@ -27,7 +27,7 @@ public class JerkSONParser {
         //regexCompiler();
         compilePattern(pattern, jerkSONData);
         dataMatcher(m);
-        parseWorkingData();
+        parseWorkingDataToItems();
     }
     /*public void regexCompiler(){
         Pattern p = Pattern.compile(pattern);
@@ -43,11 +43,22 @@ public class JerkSONParser {
             }
         }
     }
+    public boolean itemCheckAndAdd(String itemName, Item itm){
+        for(Item i : itemlist){
+            if(i.getName().equals(itemName)){//refactor
+                i.addPrice(itm.getPrice());
+                i.incrementTimesSeen();
+                return true;
+            }
+        }
+        return false;
+    }
 
-    public void parseWorkingData(){
+    public void parseWorkingDataToItems(){
         for(int i = 0; i < workingData.size();i++){
             String current = workingData.get(i);
-            itemlist.add(new Item(modifyString(findItems(current)), findType(current),findDate(current), findPrice(current)));
+            Item temp = new Item(modifyString(findItems(current)), findType(current),findDate(current), findPrice(current));
+            if(!itemCheckAndAdd(temp.getName(), temp)) itemlist.add(temp);
         }
     }
     public String modifyString(String item){//might need to fix. //this comes after data parsing.
@@ -86,7 +97,7 @@ public class JerkSONParser {
         compilePattern(datePattern, data);
         String result ="";
         if(m.find())
-            result = m.group().substring(1, m.group().length()-1);
+            result = m.group().substring(1, m.group().length());
         return result;
     }
     public ArrayList<String> getWorkingData(){return workingData;}
@@ -98,5 +109,6 @@ public class JerkSONParser {
         pattern = itemAndType+"[:@^*;!]"+price+"[:@^*;!]"+itemAndType+"[:@^*;!]"+date+"#{2}";
     }
 
+    public ArrayList<Item> getItemList(){return itemlist;}
     public int getErrorCount(){return errorcount;}
 }

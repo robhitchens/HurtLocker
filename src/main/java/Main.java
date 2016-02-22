@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws Exception{
         Main maine= new Main();
         JerkSONParser jerkSONParser = new JerkSONParser(maine.readRawDataToString());
-        DataFormatter dataFormatter = new DataFormatter(jerkSONParser.getWorkingData(), jerkSONParser.getErrorCount());
+        DataFormatter dataFormatter = new DataFormatter(jerkSONParser.getItemList(), jerkSONParser.getErrorCount());
         DataWriter dataWriter = new DataWriter(dataFormatter.getOutputData());
     }
 }
