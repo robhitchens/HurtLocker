@@ -23,8 +23,9 @@ public class DataFormatter {
     public void dataFormat(){
         for(Item i : parsedData){
             appendToBuilder(i);
+            sb.append("\n");
         }
-        sb.append(String.format("%1$-10s %2$10s", "Error", "seen: "+errorCount+" times"));
+        sb.append(String.format("%1$-13s %2$17s", "Error", "seen: "+errorCount+" times"));
         outputData = sb.toString();
     }
     public String getOutputData(){
@@ -32,15 +33,15 @@ public class DataFormatter {
         return outputData;
     }
     public void appendToBuilder(Item i){
-        sb.append(String.format("name: %1$-10s", i.getName()));
-        sb.append(String.format("%1$10s", "seen: "+i.getTimesSeen()+" times"+"\n"));
+        sb.append(String.format("name: %1$-13s", i.getName()));
+        sb.append(String.format("%1$13s", "seen: "+i.getTimesSeen()+" times"+"\n"));
         sb.append("============= \t \t =============\n");
         appendPrices(i);
     }
     public void appendPrices(Item i){
         for(String s : i.getPrices().keySet()) {
-            sb.append(String.format("price: %1$-10s", s));
-            sb.append(String.format("%1$10s", "seen: "+i.getPrices().get(s)+" times"+"\n"));
+            sb.append(String.format("price: %1$-13s", s));
+            sb.append(String.format("%1$13s", "seen: "+i.getPrices().get(s)+" times"+"\n"));
             sb.append("-------------\t\t -------------\n");
         }
     }
