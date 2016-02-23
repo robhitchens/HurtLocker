@@ -17,6 +17,7 @@ public class Item {
         this.price =price;
         timesSeen = 1;
         prices = new HashMap<String, Integer>();
+        prices.put(price, 1);
     }
     public String getName(){return name;}
     public String getType(){return type;}
