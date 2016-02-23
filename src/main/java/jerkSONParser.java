@@ -37,13 +37,6 @@ public class JerkSONParser {
             if(m.find()){
                 workingData.add(m.group().substring(0, m.group().length()-2));
             }
-            /*try{
-                m.group();
-            }catch(IllegalStateException ise){
-                errorcount++;
-                continue;
-            }*/
-            //workingData.add(m.group().substring(0, m.group().length()-2));
         }
 
     }
