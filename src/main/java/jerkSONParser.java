@@ -32,11 +32,9 @@ public class JerkSONParser {
         parseWorkingDataToItems();
     }
 
-    public void dataMatcher(Matcher m){//refactor
-        while(!m.hitEnd()){//
-            if(m.find()){
-                workingData.add(m.group().substring(0, m.group().length()-2));
-            }
+    public void dataMatcher(Matcher m){//refactor. eh it works.
+        while(m.find()){
+            workingData.add(m.group().substring(0, m.group().length()-2));
         }
 
     }
@@ -106,11 +104,11 @@ public class JerkSONParser {
     }
     public ArrayList<String> getWorkingData(){return workingData;}
 
-    public void assemblePattern(){
+    public void assemblePattern(){//really overthought this. (.+)## would have worked as well.
         String itemAndType = "([A-Za-z]+[:][A-Za-z0-9]+)";
         String price = "([A-Za-z]+[:]([0-9])+\\.[0-9]{2})";
         String date = "[A-Za-z]+[:](([0]?[0-9])|([1][0-2]))\\/(([0-2][0-9])|([3][0-1]))\\/([0-9]){4}";
-        pattern = itemAndType+"[:@^*;!]"+price+"[:@^*;!]"+itemAndType+"[:@^*;!]"+date+"#{2}";
+        pattern = itemAndType+"[:@^*;!%]"+price+"[:@^*;!%]"+itemAndType+"[:@^*;!%]"+date+"#{2}";
     }
 
     public ArrayList<Item> getItemList(){return itemlist;}
