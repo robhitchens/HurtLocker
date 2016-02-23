@@ -14,6 +14,7 @@ public class JerkSONParser {
     private String itemPattern = "[:][A-Za-z0-9]+[:@^*%;!]";
     private String pricePattern = "[:][0-9]+\\.[0-9]{2}[:@^*%;!]";
     private String datePattern = "[:](([0]?[0-9])|([1][0-2]))\\/(([0-2][0-9])|([3][0-1]))\\/([0-9]){4}";
+    private String errorPattern = "[A-Za-z]+[:][:@^*;!]";
     private ArrayList<Item> itemlist;
     public JerkSONParser(String data){
         jerkSONData = data;
@@ -24,21 +25,31 @@ public class JerkSONParser {
     }
     public void dataInit(){
         assemblePattern();
-        //regexCompiler();
         compilePattern(pattern, jerkSONData);
         dataMatcher(m);
+        compilePattern(errorPattern, jerkSONData);
+        errorMatcher(m);
         parseWorkingDataToItems();
     }
-    /*public void regexCompiler(){
-        Pattern p = Pattern.compile(pattern);
-        m = p.matcher(jerkSONData);
-    }*/
+
     public void dataMatcher(Matcher m){//refactor
-        while(!m.hitEnd()){
-            try{
-                m.find();
+        while(!m.hitEnd()){//
+            if(m.find()){
                 workingData.add(m.group().substring(0, m.group().length()-2));
+            }
+            /*try{
+                m.group();
             }catch(IllegalStateException ise){
+                errorcount++;
+                continue;
+            }*/
+            //workingData.add(m.group().substring(0, m.group().length()-2));
+        }
+
+    }
+    public void errorMatcher(Matcher m){
+        while(!m.hitEnd()){
+            if(m.find()){
                 errorcount++;
             }
         }
